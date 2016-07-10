@@ -6,7 +6,24 @@
         xmlns:local="clr-namespace:TestApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <DataTemplate DataType="local:CalculationViewModel">
+            <local:CalculationView />
+        </DataTemplate>
+        <DataTemplate DataType="local:SettingsViewModel">
+            <local:SettingsView />
+        </DataTemplate>
+    </Window.Resources>
+    
     <Grid>
-        
+        <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Расчёт"/>
+                <MenuItem Header="Настройки"/>
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+        </Menu>
+
+        <ContentControl />
     </Grid>
 </Window>

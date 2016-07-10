@@ -1,4 +1,7 @@
 using GalaSoft.MvvmLight;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TestApp.ViewModel
 {
@@ -16,19 +19,16 @@ namespace TestApp.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        public List<IPageViewModel> viewModels { get; private set; }
+        public IPageViewModel currentViewModel { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(List<IPageViewModel> vms)
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            viewModels = vms ?? new List<IPageViewModel>();
+            currentViewModel = viewModels.FirstOrDefault();
         }
     }
 }
