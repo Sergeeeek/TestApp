@@ -12,9 +12,9 @@ namespace TestApp.Service
         public TimeInterval shiftInterval { get; set; }
         public List<TimeInterval> workBreaks { get; set; }
 
-        private TimeInterval morningInterval = new TimeInterval(new TimeSpan(4, 0, 0), new TimeSpan(12, 0, 0));
-        private TimeInterval dayInterval = new TimeInterval(new TimeSpan(12, 0, 0), new TimeSpan(20, 0, 0));
-        private TimeInterval nightInterval = new TimeInterval(new TimeSpan(20, 0, 0), new TimeSpan(28, 0, 0));
+        private TimeInterval morningInterval = new TimeInterval(4, 12);
+        private TimeInterval dayInterval = new TimeInterval(12, 20);
+        private TimeInterval nightInterval = new TimeInterval(20, 28);
 
         public WorkDuration Calculate()
         {
