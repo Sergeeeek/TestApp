@@ -56,5 +56,35 @@ namespace UnitTests
             Assert.AreEqual(new TimeSpan(8, 0, 0), result.dayHours, "Day hours.");
             Assert.AreEqual(new TimeSpan(8, 0, 0), result.eveningHours, "Night hours.");
         }
+
+        [TestMethod]
+        public void Test5to4ShiftWith11to15Break()
+        {
+            var service = new TimeCalculationService();
+            service.shiftInterval = new TimeInterval(5, 4);
+            service.workBreaks.Add(new TimeInterval(11, 15));
+
+            var result = service.Calculate();
+
+            Assert.IsTrue(result.morningHours == new TimeSpan(6, 0, 0));
+            Assert.IsTrue(result.dayHours == new TimeSpan(5, 0, 0));
+            Assert.IsTrue(result.eveningHours == new TimeSpan(8, 0, 0));
+        }
+
+        [TestMethod]
+        public void TestTwoBreaks()
+        {
+            var service = new TimeCalculationService();
+            service.shiftInterval = new TimeInterval(9, 17);
+
+            service.workBreaks.Add(new TimeInterval(12, 13));
+            service.workBreaks.Add(new TimeInterval(15, 16));
+
+            var result = service.Calculate();
+
+            Assert.IsTrue(result.morningHours == new TimeSpan(3, 0, 0));
+            Assert.IsTrue(result.dayHours == new TimeSpan(3, 0, 0));
+            Assert.IsTrue(result.eveningHours == new TimeSpan(0, 0, 0));
+        }
     }
 }

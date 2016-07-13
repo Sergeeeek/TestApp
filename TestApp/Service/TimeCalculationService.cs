@@ -42,13 +42,13 @@ namespace TestApp.Service
                 switch (time.type)
                 {
                     case WorkTimeType.Morning:
-                        result.morningHours = time.hours;
+                        result.morningHours += time.hours;
                         break;
                     case WorkTimeType.Day:
-                        result.dayHours = time.hours;
+                        result.dayHours += time.hours;
                         break;
                     case WorkTimeType.Evening:
-                        result.eveningHours = time.hours;
+                        result.eveningHours += time.hours;
                         break;
                     default:
                         break;
@@ -64,12 +64,14 @@ namespace TestApp.Service
                 return intervalsOriginal;
 
             var intervalsWithBreaks = from a in intervalsOriginal
-                                      from b in workBreaks
-                                      let diff = a.Value - b
-                                      from i in diff
-                                      select new KVPair(a.Key, i);
+                                      let concat = workBreaks.Aggregate<TimeInterval, IEnumerable<TimeInterval>>(new List<TimeInterval>() { a.Value }, (x, y) =>
+                                      {
+                                          return x.SelectMany(v => v - y);
+                                      })
+                                      from c in concat
+                                      select new KVPair(a.Key, c);
 
-            return intervalsWithBreaks.ToList();
+           return intervalsWithBreaks.Distinct().ToList();
         }
     }
 }

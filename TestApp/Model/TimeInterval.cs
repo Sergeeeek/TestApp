@@ -91,6 +91,11 @@ namespace TestApp.Model
                     return new List<TimeInterval>() { r };
                 }
 
+                if((lWrapsAround || rWrapsAround) && l.start == r.end && r.start == l.end)
+                {
+                    return new List<TimeInterval>() { U };
+                }
+
                 return new List<TimeInterval>() { l, r };
             }
 
