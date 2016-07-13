@@ -57,7 +57,8 @@ namespace UnitTests
 
             var res = int9to5 * int10to13;
 
-            Assert.AreEqual(new TimeInterval(10, 13), res);
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(10, 13), res[0]);
         }
 
         [TestMethod]
@@ -68,7 +69,8 @@ namespace UnitTests
 
             var res = int10to14 * int9to15;
 
-            Assert.AreEqual(new TimeInterval(10, 14), res);
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(10, 14), res[0]);
         }
 
         [TestMethod]
@@ -76,7 +78,8 @@ namespace UnitTests
         {
             var res = new TimeInterval(20, 4) * new TimeInterval(12, 13);
 
-            Assert.AreEqual(new TimeInterval(), res);
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(), res[0]);
         }
 
         [TestMethod]
@@ -104,6 +107,15 @@ namespace UnitTests
 
             Assert.AreEqual(1, res.Count);
             Assert.AreEqual(new TimeInterval(22, 2), res[0]);
+        }
+
+        [TestMethod]
+        public void IntervalUSubtraction()
+        {
+            var res = TimeInterval.U - new TimeInterval(10, 15);
+
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(15, 10), res[0]);
         }
     }
 }

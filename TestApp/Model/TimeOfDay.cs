@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestApp.Model
 {
-    public struct TimeOfDay
+    public struct TimeOfDay : IComparable
     {
         public uint seconds { get; }
         public uint minutes { get; }
@@ -34,7 +34,8 @@ namespace TestApp.Model
             uint additionalMins = s / 60;
             minutes = (additionalMins + m) % 60;
             uint additionalHours = (additionalMins + m) / 60;
-            hours = (h + additionalHours) % 24;
+            var totalHours = (h + additionalHours);
+            hours = totalHours / 24 == 1 ? totalHours : totalHours % 24;
         }
 
         public TimeOfDay(uint h, uint m)
@@ -90,6 +91,48 @@ namespace TestApp.Model
         public static bool operator !=(TimeOfDay l, TimeOfDay r)
         {
             return !(l == r);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is TimeOfDay)
+            {
+                return this == (TimeOfDay)obj;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)totalSeconds;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj != null && obj is TimeOfDay)
+            {
+                var time = (TimeOfDay)obj;
+
+                if (this < time)
+                {
+                    return -1;
+                }
+
+                if (this == time)
+                {
+                    return 0;
+                }
+
+                if (this > time)
+                {
+                    return 1;
+                }
+            }
+
+            return -1;
         }
     }
 }
