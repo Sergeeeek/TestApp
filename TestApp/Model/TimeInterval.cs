@@ -120,7 +120,12 @@ namespace TestApp.Model
         /// <returns>true если время попадает в интервал, иначе false</returns>
         public bool GetIsTimeInInterval(TimeOfDay time)
         {
-            return (time >= start && time < end);
+            if (end < start && (time >= start || time <= end))
+            {
+                return true;
+            }
+
+            return (time >= start && time <= end);
         }
 
         public TimeSpan GetTimeTillEnd(TimeOfDay time)
