@@ -79,7 +79,9 @@
       <DependentUpon>CalculationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\TimeInterval.cs" />
+    <Compile Include="Model\TimeOfDay.cs" />
     <Compile Include="Model\WorkDuration.cs" />
+    <Compile Include="Model\WorkTimeType.cs" />
     <Compile Include="Service\ITimeCalculationService.cs" />
     <Compile Include="Service\TimeCalculationService.cs" />
     <Compile Include="SettingsView.xaml.cs">

@@ -7,55 +7,69 @@ using TestApp.Model;
 
 namespace TestApp.Service
 {
+    using KVPair = KeyValuePair<WorkTimeType, TimeInterval>;
     public class TimeCalculationService : ITimeCalculationService
     {
         public TimeInterval shiftInterval { get; set; }
         public List<TimeInterval> workBreaks { get; set; }
 
-        private TimeInterval morningInterval = new TimeInterval(4, 12);
-        private TimeInterval dayInterval = new TimeInterval(12, 20);
-        private TimeInterval nightInterval = new TimeInterval(20, 28);
+        private List<KVPair> intervalsOriginal = new List<KVPair>()
+        {
+            new KVPair(WorkTimeType.Morning, new TimeInterval(4, 12)),
+            new KVPair(WorkTimeType.Day, new TimeInterval(12, 20)),
+            new KVPair(WorkTimeType.Evening, new TimeInterval(20, 4))
+        };
+
+        public TimeCalculationService()
+        {
+            workBreaks = new List<TimeInterval>();
+        }
 
         public WorkDuration Calculate()
         {
-            var lastTime = shiftInterval.start;
-            var fullTimeCounter = new TimeSpan();
+            var intervals = AccountForBreaks();
 
-            var morningTimeCounter = new TimeSpan();
-            var dayTimeCounter = new TimeSpan();
-            var nightTimeCounter = new TimeSpan();
+            var finalTimes = from a in intervals
+                             group a by a.Key into groupedIntervals
+                             from g in groupedIntervals
+                             let hours = (g.Value * shiftInterval).Select(x => x.length)
+                             select new { type = groupedIntervals.Key, hours = hours.Aggregate((x, y) => x + y) };
 
-            while(fullTimeCounter < shiftInterval.length)
+            var result = new WorkDuration();
+
+            foreach (var time in finalTimes)
             {
-                lastTime -= new TimeSpan(lastTime.Days * 24, 0, 0);
-
-                if (morningInterval.GetIsTimeInInterval(lastTime))
+                switch (time.type)
                 {
-                    var timeTillEnd = morningInterval.GetTimeTillEnd(lastTime);
-
-                    fullTimeCounter += timeTillEnd;
-                    morningTimeCounter = timeTillEnd;
-                    lastTime += timeTillEnd;
-                }
-                else if (dayInterval.GetIsTimeInInterval(lastTime))
-                {
-                    var timeTillEnd = dayInterval.GetTimeTillEnd(lastTime);
-
-                    fullTimeCounter += timeTillEnd;
-                    dayTimeCounter = timeTillEnd;
-                    lastTime += timeTillEnd;
-                }
-                else if (nightInterval.GetIsTimeInInterval(lastTime))
-                {
-                    var timeTillEnd = nightInterval.GetTimeTillEnd(lastTime);
-
-                    fullTimeCounter += timeTillEnd;
-                    nightTimeCounter = timeTillEnd;
-                    lastTime += timeTillEnd;
+                    case WorkTimeType.Morning:
+                        result.morningHours = time.hours;
+                        break;
+                    case WorkTimeType.Day:
+                        result.dayHours = time.hours;
+                        break;
+                    case WorkTimeType.Evening:
+                        result.eveningHours = time.hours;
+                        break;
+                    default:
+                        break;
                 }
             }
 
-            return new WorkDuration() { morningHours = morningTimeCounter, dayHours = dayTimeCounter, nightHours = nightTimeCounter };
+            return result;
+        }
+
+        private List<KVPair> AccountForBreaks()
+        {
+            if (workBreaks.Count == 0)
+                return intervalsOriginal;
+
+            var intervalsWithBreaks = from a in intervalsOriginal
+                                      from b in workBreaks
+                                      let diff = a.Value - b
+                                      from i in diff
+                                      select new KVPair(a.Key, i);
+
+            return intervalsWithBreaks.ToList();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace TestApp.Model
     {
         public TimeSpan morningHours { get; set; }
         public TimeSpan dayHours { get; set; }
-        public TimeSpan nightHours { get; set; }
+        public TimeSpan eveningHours { get; set; }
     }
 }

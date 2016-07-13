@@ -12,7 +12,7 @@ namespace UnitTests
     public class TimeIntervalTests
     {
         [TestMethod]
-        public void IntervalTestSubstractionFromMiddle()
+        public void IntervalSubstractionFromMiddle()
         {
             var int9to5 = new TimeInterval(9, 17);
             var int12to13 = new TimeInterval(12, 13);
@@ -25,7 +25,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void IntervalTestSubstractionFromStart()
+        public void IntervalSubstractionFromStart()
         {
             var int9to5 = new TimeInterval(9, 17);
             var int5to11 = new TimeInterval(5, 11);
@@ -37,7 +37,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void IntervalTestSubstractionFromEnd()
+        public void IntervalSubstractionFromEnd()
         {
             var int9to5 = new TimeInterval(9, 17);
             var int16to20 = new TimeInterval(16, 20);
@@ -50,7 +50,7 @@ namespace UnitTests
 
 
         [TestMethod]
-        public void IntervalTestProductFromMiddle()
+        public void IntervalProductFromMiddle()
         {
             var int9to5 = new TimeInterval(9, 17);
             var int10to13 = new TimeInterval(10, 13);
@@ -61,7 +61,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void IntervalTestProductFromOutside()
+        public void IntervalProductFromOutside()
         {
             var int10to14 = new TimeInterval(10, 14);
             var int9to15 = new TimeInterval(9, 15);
@@ -72,7 +72,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void IntervalTestProductFromOutsideNotIntersecting()
+        public void IntervalProductFromOutsideNotIntersecting()
         {
             var res = new TimeInterval(20, 4) * new TimeInterval(12, 13);
 
@@ -80,18 +80,30 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void IntervalTestProductFromStart()
+        public void IntervalProductFromStart()
         {
             var res = new TimeInterval(9, 17) * new TimeInterval(5, 11);
 
-            Assert.AreEqual(new TimeInterval(9, 11), res);
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(9, 11), res[0]);
         }
 
-        public void IntervalTestProductFromEnd()
+        [TestMethod]
+        public void IntervalProductFromEnd()
         {
             var res = new TimeInterval(9, 17) * new TimeInterval(15, 20);
 
-            Assert.AreEqual(new TimeInterval(15, 17), res);
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(15, 17), res[0]);
+        }
+
+        [TestMethod]
+        public void IntervalProduct24Wrap()
+        {
+            var res = new TimeInterval(20, 4) * new TimeInterval(22, 2);
+
+            Assert.AreEqual(1, res.Count);
+            Assert.AreEqual(new TimeInterval(22, 2), res[0]);
         }
     }
 }
