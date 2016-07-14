@@ -113,6 +113,11 @@ namespace TestApp.Model
             }
             if (!isStartIn && !isEndIn)
             {
+                if(r.GetIsTimeInInterval(l.start) && r.GetIsTimeInInterval(l.end))
+                {
+                    return r + l;
+                }
+
                 if (bothWrapAround || (bothDontWrapAround
                     && r.start < l.start
                     && r.end > l.end))
