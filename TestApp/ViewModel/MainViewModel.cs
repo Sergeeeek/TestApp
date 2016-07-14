@@ -20,7 +20,17 @@ namespace TestApp.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        #region Binding properties
+
         private IPageViewModel _currentViewModel;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Текущий ViewModel страницы. Может быть <see cref="calculationVM"/> или <see cref="settingsVM"/>.
+        /// 
+        /// </summary>
         public IPageViewModel currentViewModel
         {
             get
@@ -40,6 +50,14 @@ namespace TestApp.ViewModel
         }
 
         private ICommand _switchToCalculationCommand;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Команда для переключения к странице расчётов.
+        /// 
+        /// </summary>
         public ICommand switchToCalculationCommand
         {
             get
@@ -59,6 +77,14 @@ namespace TestApp.ViewModel
         }
 
         private ICommand _switchToSettingsCommand;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Команда для переключения к странице настроек.
+        /// 
+        /// </summary>
         public ICommand switchToSettingsCommand
         {
             get
@@ -78,6 +104,14 @@ namespace TestApp.ViewModel
         }
 
         private ICommand _quitCommand;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Команда для выхода из программы.
+        /// 
+        /// </summary>
         public ICommand quitCommand
         {
             get
@@ -96,12 +130,18 @@ namespace TestApp.ViewModel
             }
         }
 
+        #endregion
+
         private IPageViewModel calculationVM;
         private IPageViewModel settingsVM;
 
         /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
         /// </summary>
+        /// <param name="calculationVM">ViewModel для страницы расчётов</param>
+        /// <param name="settingsVM">ViewModel для страницы настроек</param>
         public MainViewModel(IPageViewModel calculationVM, IPageViewModel settingsVM)
         {
             if (calculationVM == null || settingsVM == null)

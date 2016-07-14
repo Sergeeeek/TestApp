@@ -17,7 +17,22 @@ namespace TestApp.ViewModel
             }
         }
 
-        private ObservableCollection<DateTime> _breakStarts;
+        #region Binding properties
+
+        private ObservableCollection<DateTime> _breakStarts = new ObservableCollection<DateTime>()
+        {
+            new DateTime(),
+            new DateTime(),
+            new DateTime()
+        };
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Массив начал перерывов.
+        /// 
+        /// </summary>
         public ObservableCollection<DateTime> breakStarts
         {
             get
@@ -36,7 +51,20 @@ namespace TestApp.ViewModel
             }
         }
 
-        private ObservableCollection<DateTime> _breakEnds;
+        private ObservableCollection<DateTime> _breakEnds = new ObservableCollection<DateTime>()
+        {
+            new DateTime(),
+            new DateTime(),
+            new DateTime()
+        };
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Массив концов перерывов.
+        /// 
+        /// </summary>
         public ObservableCollection<DateTime> breakEnds
         {
             get
@@ -55,7 +83,20 @@ namespace TestApp.ViewModel
             }
         }
 
-        private ObservableCollection<bool> _breakEnabled;
+        private ObservableCollection<bool> _breakEnabled = new ObservableCollection<bool>()
+        {
+            false,
+            false,
+            false
+        };
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Массив состояний перерывов (включены или выключены)
+        /// 
+        /// </summary>
         public ObservableCollection<bool> breakEnabled
         {
             get
@@ -74,8 +115,16 @@ namespace TestApp.ViewModel
             }
         }
 
+        #endregion
+
         private ITimeCalculationService timeService;
 
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// </summary>
+        /// <param name="timeService">Сервис расчётов.</param>
         public SettingsViewModel(ITimeCalculationService timeService)
         {
             if (timeService == null)
@@ -83,10 +132,7 @@ namespace TestApp.ViewModel
 
             this.timeService = timeService;
 
-            breakStarts = new ObservableCollection<DateTime>(new List<DateTime>() { new DateTime(), new DateTime(), new DateTime() });
-            breakEnds = new ObservableCollection<DateTime>(new List<DateTime>() { new DateTime(), new DateTime(), new DateTime() });
-            breakEnabled = new ObservableCollection<bool>(new List<bool>() { false, false, false });
-
+            // При любом изменении данных обновляем сервис
             _breakStarts.CollectionChanged += processCollectionChangedEvent;
             _breakEnds.CollectionChanged += processCollectionChangedEvent;
             _breakEnabled.CollectionChanged += processCollectionChangedEvent;
@@ -104,8 +150,8 @@ namespace TestApp.ViewModel
                     var end = breakEnds[i];
                     resultList.Add(
                         new TimeInterval(
-                            new TimeOfDay((uint)start.Hour, (uint)start.Minute, (uint)start.Second)
-                            , new TimeOfDay((uint)end.Hour, (uint)end.Minute, (uint)end.Second)));
+                            new TimeOfDay((uint)start.Hour, (uint)start.Minute, (uint)start.Second),
+                            new TimeOfDay((uint)end.Hour,   (uint)end.Minute,   (uint)end.Second)));
                 }
             }
 

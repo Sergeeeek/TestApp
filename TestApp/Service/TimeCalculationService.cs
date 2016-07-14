@@ -10,7 +10,19 @@ namespace TestApp.Service
     using KVPair = KeyValuePair<WorkTimeType, TimeInterval>;
     public class TimeCalculationService : ITimeCalculationService
     {
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// <see cref="ITimeCalculationService.shiftInterval"/> 
+        /// </summary>
         public TimeInterval shiftInterval { get; set; }
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// <see cref="ITimeCalculationService.workBreaks"/>
+        /// </summary>
         public List<TimeInterval> workBreaks { get; set; }
 
         private List<KVPair> intervalsOriginal = new List<KVPair>()
@@ -20,11 +32,22 @@ namespace TestApp.Service
             new KVPair(WorkTimeType.Evening, new TimeInterval(20, 4))
         };
 
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// </summary>
         public TimeCalculationService()
         {
             workBreaks = new List<TimeInterval>();
         }
 
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// <see cref="ITimeCalculationService.Calculate()"/>
+        /// </summary>
         public WorkDuration Calculate()
         {
             var intervals = AccountForBreaks();

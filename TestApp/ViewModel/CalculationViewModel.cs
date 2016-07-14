@@ -19,7 +19,17 @@ namespace TestApp.ViewModel
             }
         }
 
+        #region Binding properties
+
         DateTime _shiftStartTime = DateTime.Now;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Время начала смены.
+        /// 
+        /// </summary>
         public DateTime shiftStartTime
         {
             get
@@ -39,6 +49,14 @@ namespace TestApp.ViewModel
         }
 
         DateTime _shiftEndTime = DateTime.Now;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Время конца смены.
+        /// 
+        /// </summary>
         public DateTime shiftEndTime
         {
             get
@@ -58,6 +76,14 @@ namespace TestApp.ViewModel
         }
 
         DateTime _morningHours = new DateTime();
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Кол-во утренних часов.
+        /// 
+        /// </summary>
         public DateTime morningHours
         {
             get
@@ -77,6 +103,14 @@ namespace TestApp.ViewModel
         }
 
         DateTime _dayHours = new DateTime();
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Кол-во дневных часов.
+        /// 
+        /// </summary>
         public DateTime dayHours
         {
             get
@@ -96,6 +130,14 @@ namespace TestApp.ViewModel
         }
 
         DateTime _eveningHours = new DateTime();
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Кол-во вечерних часов.
+        /// 
+        /// </summary>
         public DateTime eveningHours
         {
             get
@@ -115,6 +157,14 @@ namespace TestApp.ViewModel
         }
 
         private ICommand _calculateCommand;
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// 
+        /// Команда для расчёта часов.
+        /// 
+        /// </summary>
         public ICommand calculateCommand
         {
             get
@@ -133,8 +183,17 @@ namespace TestApp.ViewModel
             }
         }
 
+        #endregion
+
+        // Сервис расчётов
         private ITimeCalculationService timeService;
 
+        /// <summary>
+        /// <para>
+        /// Автор: Сергей Позняк
+        /// </para>
+        /// </summary>
+        /// <param name="timeService">Сервис расчётов.</param>
         public CalculationViewModel(ITimeCalculationService timeService)
         {
             if (timeService == null)
@@ -142,6 +201,7 @@ namespace TestApp.ViewModel
 
             this.timeService = timeService;
 
+            // Команда конвертирует данные в нужный формат и отправляет их в timeService, а потом сохраняет результаты
             calculateCommand = new Command(() =>
             {
                 var shiftInterval =

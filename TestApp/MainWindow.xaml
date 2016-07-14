@@ -34,7 +34,7 @@
             </Menu>
 
 
-            <ContentControl x:Name="Content"  Content="{Binding currentViewModel}" Grid.Row="1" />
+            <ContentControl Content="{Binding currentViewModel}" Grid.Row="1" />
         </Grid>
     </ScrollViewer>
 </Window>
