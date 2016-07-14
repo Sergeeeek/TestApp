@@ -4,9 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TestApp"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="300" d:DesignWidth="352.72">
+    <DockPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+        <StackPanel Margin="10" DockPanel.Dock="Top" Orientation="Horizontal">
+            <Label Margin="10" Content="Перерыв 1:" />
+            <xctk:TimePicker Value="{Binding breakStarts[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <xctk:TimePicker Value="{Binding breakEnds[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <CheckBox IsChecked="{Binding breakEnabled[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
+        </StackPanel>
+        <StackPanel Margin="10" DockPanel.Dock="Top" Orientation="Horizontal">
+            <Label Margin="10" Content="Перерыв 2:" />
+            <xctk:TimePicker Value="{Binding breakStarts[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <xctk:TimePicker Value="{Binding breakEnds[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <CheckBox IsChecked="{Binding breakEnabled[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
+        </StackPanel>
+        <StackPanel Margin="10" DockPanel.Dock="Top" Orientation="Horizontal">
+            <Label Margin="10" Content="Перерыв 3:" />
+            <xctk:TimePicker Value="{Binding breakStarts[2], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <xctk:TimePicker Value="{Binding breakEnds[2], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" Format="LongTime" Padding="40,0" />
+            <CheckBox IsChecked="{Binding breakEnabled[2], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
+        </StackPanel>
+    </DockPanel>
 </UserControl>

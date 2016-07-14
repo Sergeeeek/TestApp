@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:TestApp"
         xmlns:vms="clr-namespace:TestApp.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="370" Width="525"
+        MinWidth="500">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:CalculationViewModel}">
             <local:CalculationView />
@@ -15,23 +16,25 @@
             <local:SettingsView />
         </DataTemplate>
     </Window.Resources>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="21*"/>
-            <RowDefinition Height="302*"/>
-        </Grid.RowDefinitions>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="21*"/>
+                <RowDefinition Height="302*"/>
+            </Grid.RowDefinitions>
 
 
-        <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Расчёт" Command="{Binding switchToCalculationCommand}"/>
-                <MenuItem Header="Настройки" Command="{Binding switchToSettingsCommand}"/>
-                <MenuItem Header="Выход" Command="{Binding quitCommand}" />
-            </MenuItem>
-        </Menu>
+            <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Расчёт" Command="{Binding switchToCalculationCommand}"/>
+                    <MenuItem Header="Настройки" Command="{Binding switchToSettingsCommand}"/>
+                    <MenuItem Header="Выход" Command="{Binding quitCommand}" />
+                </MenuItem>
+            </Menu>
 
 
-        <ContentControl Content="{Binding currentViewModel}" Grid.Row="1" />
-    </Grid>
+            <ContentControl x:Name="Content"  Content="{Binding currentViewModel}" Grid.Row="1" />
+        </Grid>
+    </ScrollViewer>
 </Window>

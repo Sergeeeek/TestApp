@@ -113,7 +113,9 @@ namespace TestApp.Model
             }
             if (!isStartIn && !isEndIn)
             {
-                if (bothWrapAround || bothDontWrapAround)
+                if (bothWrapAround || (bothDontWrapAround
+                    && r.start < l.start
+                    && r.end > l.end))
                 {
                     return new List<TimeInterval>() { r };
                 }
