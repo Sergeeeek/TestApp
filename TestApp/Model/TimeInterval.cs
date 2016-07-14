@@ -93,12 +93,18 @@ namespace TestApp.Model
             }
             if (isStartIn && isEndIn)
             {
-                if ((bothWrapAround && (r.start < l.end && r.end > l.start) || (r.start > l.start && r.end < l.end)) || (bothDontWrapAround && l.start < r.start && l.end > r.end))
+                if ((bothWrapAround 
+                    && ((r.start < l.end && r.end > l.start) 
+                    || (r.start > l.start && r.end < l.end)) 
+                    || (bothDontWrapAround && l.start < r.start && l.end > r.end)))
                 {
                     return new List<TimeInterval>() { l };
                 }
 
-                if (lWrapsAround && !rWrapsAround && ((r.start < l.start && r.end < l.start) || (r.start > l.end && r.end > r.end)))
+                if (lWrapsAround 
+                    && !rWrapsAround 
+                    && ((r.start < l.start && r.end < l.start) 
+                    || (r.start > l.end && r.end > l.end)))
                 {
                     return new List<TimeInterval>() { l };
                 }
