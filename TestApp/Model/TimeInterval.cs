@@ -8,9 +8,18 @@ namespace TestApp.Model
 {
     public struct TimeInterval
     {
+	/// <summary>
+        /// Время начала периода
+        /// </summary>
         public TimeOfDay start { get; }
+        /// <summary>
+        /// Время конца периода
+        /// </summary>
         public TimeOfDay end { get; }
 
+        /// <summary>
+        /// Длина этого периода
+        /// </summary>
         public TimeSpan length
         {
             get
@@ -19,7 +28,13 @@ namespace TestApp.Model
             }
         }
 
+        /// <summary>
+        /// "Универсальный" период - период от 0 до 24 часов, охватывает весь день
+        /// </summary>
         public static TimeInterval U = new TimeInterval(0, 24);
+        /// <summary>
+        /// Пустой интервал
+        /// </summary>
         public static TimeInterval O = new TimeInterval(0, 0);
 
         public TimeInterval(TimeOfDay start, TimeOfDay end)
@@ -34,6 +49,12 @@ namespace TestApp.Model
 
         }
 
+        /// <summary>
+        /// Объеденение двух интервалов.
+        /// </summary>
+        /// <param name="l">Первое слагаемое</param>
+        /// <param name="r">Второе слагаемое</param>
+        /// <returns>Новый интервал(-ы) который содержит в себе и первый интервал и второй</returns>
         public static List<TimeInterval> operator +(TimeInterval l, TimeInterval r)
         {
             if (l == r)
