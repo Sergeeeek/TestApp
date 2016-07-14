@@ -1,7 +1,8 @@
-using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace TestApp.ViewModel
 {
@@ -19,16 +20,101 @@ namespace TestApp.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        public List<IPageViewModel> viewModels { get; private set; }
-        public IPageViewModel currentViewModel { get; private set; }
+        private IPageViewModel _currentViewModel;
+        public IPageViewModel currentViewModel
+        {
+            get
+            {
+                return _currentViewModel;
+            }
+            set
+            {
+                if(_currentViewModel == value)
+                {
+                    return;
+                }
+
+                _currentViewModel = value;
+                RaisePropertyChanged("currentViewModel");
+            }
+        }
+
+        private ICommand _switchToCalculationCommand;
+        public ICommand switchToCalculationCommand
+        {
+            get
+            {
+                return _switchToCalculationCommand;
+            }
+            set
+            {
+                if(_switchToCalculationCommand == value)
+                {
+                    return;
+                }
+
+                _switchToCalculationCommand = value;
+                RaisePropertyChanged("switchToCalculation");
+            }
+        }
+
+        private ICommand _switchToSettingsCommand;
+        public ICommand switchToSettingsCommand
+        {
+            get
+            {
+                return _switchToSettingsCommand;
+            }
+            set
+            {
+                if (_switchToSettingsCommand == value)
+                {
+                    return;
+                }
+
+                _switchToSettingsCommand = value;
+                RaisePropertyChanged("switchToSettings");
+            }
+        }
+
+        private ICommand _quitCommand;
+        public ICommand quitCommand
+        {
+            get
+            {
+                return _quitCommand;
+            }
+            set
+            {
+                if(_quitCommand == value)
+                {
+                    return;
+                }
+
+                _quitCommand = value;
+                RaisePropertyChanged("quitCommand");
+            }
+        }
+
+        private IPageViewModel calculationVM;
+        private IPageViewModel settingsVM;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(List<IPageViewModel> vms)
+        public MainViewModel(IPageViewModel calculationVM, IPageViewModel settingsVM)
         {
-            viewModels = vms ?? new List<IPageViewModel>();
-            currentViewModel = viewModels.FirstOrDefault();
+            if (calculationVM == null || settingsVM == null)
+                throw new ArgumentNullException();
+
+            this.calculationVM = calculationVM;
+            this.settingsVM = settingsVM;
+
+            switchToCalculationCommand = new Command(() => currentViewModel = calculationVM);
+            switchToSettingsCommand = new Command(() => currentViewModel = settingsVM);
+            quitCommand = new Command(() => App.Current.Shutdown(0));
+
+            currentViewModel = calculationVM;
         }
     }
 }

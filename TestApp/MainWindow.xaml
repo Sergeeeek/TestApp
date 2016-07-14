@@ -4,26 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestApp"
+        xmlns:vms="clr-namespace:TestApp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <DataTemplate DataType="local:CalculationViewModel">
+        <DataTemplate DataType="{x:Type vms:CalculationViewModel}">
             <local:CalculationView />
         </DataTemplate>
-        <DataTemplate DataType="local:SettingsViewModel">
+        <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
             <local:SettingsView />
         </DataTemplate>
     </Window.Resources>
     
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="21*"/>
+            <RowDefinition Height="302*"/>
+        </Grid.RowDefinitions>
+
+
         <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Расчёт"/>
-                <MenuItem Header="Настройки"/>
-                <MenuItem Header="Выход"/>
+                <MenuItem Header="Расчёт" Command="{Binding switchToCalculationCommand}"/>
+                <MenuItem Header="Настройки" Command="{Binding switchToSettingsCommand}"/>
+                <MenuItem Header="Выход" Command="{Binding quitCommand}" />
             </MenuItem>
         </Menu>
 
-        <ContentControl />
+
+        <ContentControl Content="{Binding currentViewModel}" Grid.Row="1" />
     </Grid>
 </Window>

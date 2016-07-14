@@ -36,19 +36,19 @@ namespace TestApp.Model
 
         public static List<TimeInterval> operator +(TimeInterval l, TimeInterval r)
         {
-            if(l == r)
+            if (l == r)
             {
                 return new List<TimeInterval>() { l };
             }
-            if(l == U || r == U)
+            if (l == U || r == U)
             {
                 return new List<TimeInterval>() { U };
             }
-            if(l == O)
+            if (l == O)
             {
                 return new List<TimeInterval>() { r };
             }
-            if(r == O)
+            if (r == O)
             {
                 return new List<TimeInterval>() { l };
             }
@@ -66,32 +66,32 @@ namespace TestApp.Model
             {
                 return new List<TimeInterval>() { new TimeInterval(l.start, r.end) };
             }
-            if(!isStartIn && isEndIn)
+            if (!isStartIn && isEndIn)
             {
                 return new List<TimeInterval>() { new TimeInterval(r.start, l.end) };
             }
-            if(isStartIn && isEndIn)
+            if (isStartIn && isEndIn)
             {
-                if (bothWrapAround || bothDontWrapAround)
+                if ((bothWrapAround && (r.start < l.end && r.end > l.start) || (r.start > l.start && r.end < l.end)) || (bothDontWrapAround && l.start < r.start && l.end > r.end))
                 {
                     return new List<TimeInterval>() { l };
                 }
 
-                if(lWrapsAround)
+                if (lWrapsAround && !rWrapsAround && ((r.start < l.start && r.end < l.start) || (r.start > l.end && r.end > r.end)))
                 {
                     return new List<TimeInterval>() { l };
                 }
 
                 return new List<TimeInterval>() { U };
             }
-            if(!isStartIn && !isEndIn)
+            if (!isStartIn && !isEndIn)
             {
                 if (bothWrapAround || bothDontWrapAround)
                 {
                     return new List<TimeInterval>() { r };
                 }
 
-                if((lWrapsAround || rWrapsAround) && l.start == r.end && r.start == l.end)
+                if ((lWrapsAround || rWrapsAround) && l.start == r.end && r.start == l.end)
                 {
                     return new List<TimeInterval>() { U };
                 }
@@ -136,11 +136,11 @@ namespace TestApp.Model
 
         public static TimeInterval Invert(TimeInterval that)
         {
-            if(that == O)
+            if (that == O)
             {
                 return U;
             }
-            if(that == U)
+            if (that == U)
             {
                 return O;
             }
@@ -157,12 +157,12 @@ namespace TestApp.Model
 
             var sortedIntervals = intervals.OrderBy(x => x.start).ToList();
 
-            for(int i = 0; i < sortedIntervals.Count - 1; i++)
+            for (int i = 0; i < sortedIntervals.Count - 1; i++)
             {
                 var tempInt = sortedIntervals[0];
                 var tempInt2 = sortedIntervals[1];
 
-                if(tempInt.start > tempInt.end && tempInt2.start > tempInt2.end)
+                if (tempInt.start > tempInt.end && tempInt2.start > tempInt2.end)
                 {
                     sortedIntervals[i] = new TimeInterval(tempInt2.start, tempInt.end);
                     sortedIntervals[i + 1] = new TimeInterval(tempInt.start, tempInt2.end);
